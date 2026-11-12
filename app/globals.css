@@ -1,0 +1,53 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+
+/* ── AETHRA "Flight Deck" theme ─────────────────────────────────────────────
+   One dark, low-glare palette (suits dim cabin lighting). Values are space-separated
+   RGB triplets so Tailwind opacity modifiers (bg-cyan/10) keep working. */
+:root {
+  color-scheme: dark;
+  --bg: 6 9 18; --bg2: 12 18 33; --card: 15 22 39; --line: 35 47 73;
+  --tx: 232 238 248; --mute: 144 159 186;
+  --cyan: 86 212 240; --teal: 74 222 160; --warn: 247 185 72; --crit: 255 107 107;
+  --navy: 5 8 15; --navy2: 22 34 60; --onaccent: 5 9 18;
+}
+html { background: rgb(var(--bg)); font-size: 16px; } html.large-text { font-size: 19px; }
+body {
+  color: rgb(var(--tx)); -webkit-font-smoothing: antialiased; line-height: 1.55; overflow-x: hidden;
+  background-color: rgb(var(--bg));
+  background-image:
+    radial-gradient(900px 520px at 85% -10%, rgb(var(--cyan) / 0.10), transparent 60%),
+    radial-gradient(700px 480px at -5% 105%, rgb(120 90 255 / 0.08), transparent 60%),
+    radial-gradient(1px 1px at 20px 30px, rgb(255 255 255 / 0.35), transparent 60%),
+    radial-gradient(1px 1px at 110px 90px, rgb(255 255 255 / 0.22), transparent 60%),
+    radial-gradient(1.5px 1.5px at 190px 40px, rgb(255 255 255 / 0.3), transparent 60%);
+  background-size: auto, auto, 230px 130px, 230px 130px, 230px 130px; background-attachment: fixed;
+}
+h1, h2, h3 { letter-spacing: -0.01em; }
+::selection { background: rgb(var(--cyan) / 0.35); color: #fff; }
+:focus-visible { outline: 3px solid rgb(var(--cyan)); outline-offset: 2px; border-radius: 6px; }
+.on-dark :focus-visible { outline-color: rgb(var(--cyan)); }
+input, select, textarea { font: inherit; } input[type=range] { accent-color: rgb(var(--cyan)); } input[type=checkbox], input[type=radio] { accent-color: rgb(var(--cyan)); }
+input[type=date]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+select option { background: rgb(var(--card)); color: rgb(var(--tx)); }
+* { scrollbar-width: thin; scrollbar-color: rgb(var(--line)) transparent; }
+.skip { position: absolute; left: -999px; top: 0; z-index: 100; background: rgb(var(--cyan)); color: rgb(var(--onaccent)); padding: 12px 16px; font-weight: 600; } .skip:focus { left: 8px; top: 8px; }
+
+/* Reusable design primitives */
+.eyebrow { font-family: theme('fontFamily.mono'); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(var(--mute)); }
+.panel-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.02em; color: rgb(var(--tx)); }
+.panel-title::before { content: ''; width: 3px; height: 14px; border-radius: 2px; background: rgb(var(--cyan)); box-shadow: 0 0 10px rgb(var(--cyan) / 0.7); }
+.hero-orbit { background:
+  radial-gradient(520px 320px at 88% 0%, rgb(var(--cyan) / 0.22), transparent 65%),
+  radial-gradient(480px 360px at 0% 100%, rgb(120 90 255 / 0.18), transparent 65%),
+  linear-gradient(160deg, rgb(var(--navy2)), rgb(var(--navy))); }
+@keyframes breathe { 0%,100% { transform: scale(.6); } 40% { transform: scale(1); } 60% { transform: scale(1); } }
+@keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+.pulse-dot { animation: pulse-dot 2.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+html.reduce-motion * { animation: none !important; transition: none !important; }
+
+/* Print: swap to a light, ink-friendly palette */
+@media print {
+  :root { color-scheme: light; --bg: 255 255 255; --bg2: 241 244 248; --card: 255 255 255; --line: 205 213 225; --tx: 15 27 45; --mute: 82 98 122; --cyan: 11 110 122; --teal: 10 107 82; --warn: 138 83 0; --crit: 179 38 30; }
+  aside, header { display: none !important; } body { background: #fff !important; }
+}
