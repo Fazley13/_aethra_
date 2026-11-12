@@ -18,8 +18,8 @@ export default function Reports() {
         {pend.length > 0 && <ul className="mt-3 space-y-1 text-sm">{pend.map((r) => <li key={r.id}>• {r.title} ({r.id})</li>)}</ul>}{pend.length > 0 && <Btn className="mt-3" onClick={() => setMarkAll(true)}>I sent these myself — mark as sent</Btn>}</Card>
       <ConfirmDialog open={!!del} danger title="Delete this report?" confirmLabel="Delete" onCancel={() => setDel(null)} onConfirm={() => { set((x) => ({ ...x, reports: x.reports.filter((q) => q.id !== del!.id) })); setDel(null); }}>“{del?.title}” will be removed from this device. Export it first if you need a copy.</ConfirmDialog>
       <ConfirmDialog open={markAll} title="Mark all as sent?" confirmLabel="Mark as sent" onCancel={() => setMarkAll(false)} onConfirm={() => { set((x) => ({ ...x, reports: x.reports.map((r) => ({ ...r, transmitted: true, transmittedAt: Date.now() })) })); setMarkAll(false); }}>Only confirm if you really delivered these reports through another channel. AETHRA cannot check.</ConfirmDialog>
-      <LabPanel mode="summary" title="Laboratory findings for report context" />
-      <OSDEvidence domain="all" title="NASA OSD evidence available for report context" />
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Advanced laboratory data</summary><div className="mt-3"><LabPanel mode="summary" title="Laboratory findings for report context" /></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">NASA research context (optional)</summary><div className="mt-3"><OSDEvidence domain="all" title="NASA OSD evidence available for report context" /></div></details>
       <Disclaimer /></div>
   );
 }

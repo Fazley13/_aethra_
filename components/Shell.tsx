@@ -6,8 +6,7 @@ import { useApp } from '@/lib/store'; import { SimTag, StatusBadge } from './ui'
 const GROUPS = [
   { g: 'Mission', items: [{ href: '/', label: 'Overview', I: Radar }, { href: '/dashboard', label: 'Health Dashboard', I: LayoutDashboard }, { href: '/crew', label: 'Crew', I: Users }] },
   { g: 'Health', items: [{ href: '/check', label: 'Health Check', I: ClipboardCheck }, { href: '/assess', label: 'Assessment', I: Bot }, { href: '/history', label: 'Health History', I: History }, { href: '/body', label: 'Body Explorer', I: Accessibility }] },
-  { g: 'Wellbeing & hazards', items: [{ href: '/hazards', label: 'Space Hazards', I: Atom }, { href: '/wellness', label: 'Mental Wellness', I: Brain }, { href: '/relax', label: 'Earth Games', I: Gamepad2 }, { href: '/studio', label: 'Canvas Studio', I: Palette }] },
-  { g: 'Response & system', items: [{ href: '/emergency', label: 'Emergency', I: Siren }, { href: '/reports', label: 'Reports', I: FileText }, { href: '/resources', label: 'Resources', I: BookOpen }, { href: '/settings', label: 'Settings', I: Settings }] },
+  { g: 'Support & Tools', items: [{ href: '/hazards', label: 'Space Hazards', I: Atom }, { href: '/wellness', label: 'Mental Wellness', I: Brain }, { href: '/relax', label: 'Relax & Games', I: Gamepad2 }, { href: '/studio', label: 'Canvas Studio', I: Palette }, { href: '/emergency', label: 'Emergency', I: Siren }, { href: '/reports', label: 'Reports', I: FileText }, { href: '/resources', label: 'Resources', I: BookOpen }, { href: '/settings', label: 'Settings', I: Settings }] },
 ];
 export const LogoMark = ({ size = 36 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#275BD6" /><stop offset="1" stopColor="#DD6F42" /></linearGradient></defs>
@@ -29,7 +28,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           <Link key={href} href={href} aria-current={on ? 'page' : undefined} className={`relative flex min-h-[44px] items-center gap-3 rounded-xl px-3 text-sm transition-colors ${on ? 'bg-cyan/10 font-semibold text-cyan shadow-[inset_0_0_0_1px_rgb(var(--cyan)/0.25)]' : 'text-mute hover:bg-white/5 hover:text-tx'}`}>{on && <span className="absolute -left-3 top-2.5 h-6 w-1 rounded-r bg-cyan shadow-[0_0_12px_rgb(var(--cyan))]" aria-hidden />}<I size={18} aria-hidden />{label}{href === '/reports' && pending > 0 && <span className="ml-auto rounded-full bg-cyan px-2 font-mono text-xs font-semibold text-onaccent">{pending}</span>}</Link>); })}</div>))}
     </nav>
   );
-  const brand = <div className="aethra-brand flex items-center gap-3 px-5 pb-1 pt-6"><span className="aethra-brand-mark"><LogoMark size={40} /></span><div><div className="text-lg font-semibold leading-none tracking-[0.28em] text-tx">AETHRA</div><div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-mute">Beyond Earth · Beyond Limits</div></div></div>;
+  const brand = <div className="aethra-brand flex items-center gap-3 px-5 pb-1 pt-6"><span className="aethra-brand-mark"><LogoMark size={40} /></span><div><div className="text-lg font-semibold leading-none tracking-[0.28em] text-tx">AETHRA</div><div className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-mute">Astronaut Health System</div></div></div>;
   return (
     <div className="aethra-shell min-h-screen lg:pl-64">
       <a href="#main" className="skip">Skip to main content</a>

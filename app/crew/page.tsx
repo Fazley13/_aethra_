@@ -10,7 +10,7 @@ export default function Crew() {
   const moods = rows.map((r) => latest(s.readings[r.p.id] ?? [], 'mood')?.v).filter((x): x is number => typeof x === 'number'); const avgM = moods.length >= 3 ? Math.round((moods.reduce((a, b) => a + b, 0) / moods.length) * 10) / 10 : null;
   return (
     <div className="space-y-6"><PageHead crumb="Mission" title="Crew Overview" sub="Crew health at a glance. Individual details stay private by default." right={profile.simulated ? <SimTag>SAMPLE CREW</SimTag> : undefined} />
-      <Callout tone="warn" title="Privacy model: demonstration only">The visibility rules below hide data in the interface, but anyone using this browser can still read local storage. A real deployment needs server-side authentication, role-based access and encryption (see lib/access.ts).</Callout>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Privacy & deployment note</summary><div className="mt-3"><Callout tone="warn" title="Demonstration only">The visibility rules below hide data in the interface, but anyone using this browser can still read local storage. A real deployment needs server-side authentication, role-based access and encryption (see lib/access.ts).</Callout></div></details>
       <div className="grid gap-4 md:grid-cols-3">
         <Card title="Crew health status"><div className="text-sm"><b className="font-mono text-2xl">{n('GREEN')}</b> GREEN · <b className="font-mono text-2xl">{n('AMBER')}</b> AMBER · <b className="font-mono text-2xl">{n('RED')}</b> RED · <b className="font-mono text-2xl">{n('UNKNOWN')}</b> UNKNOWN</div><p className="mt-1 text-xs text-mute">UNKNOWN means not enough recent data. It is never counted as healthy.</p></Card>
         <Card title="Average mood (crew)">{avgM !== null ? <div className="font-mono text-3xl">{avgM}<span className="text-sm text-mute">/10</span></div> : <p className="text-sm text-mute">Hidden unless 3 or more crew have mood data (privacy-preserving aggregate).</p>}</Card>
@@ -22,8 +22,8 @@ export default function Crew() {
             <td><label className="sr-only" htmlFor={`o-${p.id}`}>Availability for {p.name}</label><select id={`o-${p.id}`} className={`${inputCls} !min-h-[40px] max-w-[160px]`} value={s.ops[p.id] ?? 'Not set'} onChange={(e) => set((x) => ({ ...x, ops: { ...x.ops, [p.id]: e.target.value as OpsStatus } }))}>{OPS.map((o) => <option key={o}>{o}</option>)}</select></td>
             <td>{pending}</td><td><Freshness ts={last} /></td></tr>); })}</tbody></table></div>
         <p className="mt-2 text-xs text-mute">Availability is a manual operational decision and is not derived from health data. You are viewing as: <b>{role === 'astronaut' ? 'the selected astronaut' : role === 'medical' ? 'crew medical officer (demo role)' : 'fellow crew member'}</b> — change in Settings.</p></Card>
-      <LabPanel mode="summary" title="Crew laboratory assessment context" />
-      <OSDEvidence domain="all" title="NASA OSD laboratory context for the Inspiration4 cohort" />
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Advanced laboratory data</summary><div className="mt-3"><LabPanel mode="summary" title="Crew laboratory assessment context" /></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">NASA research context (optional)</summary><div className="mt-3"><OSDEvidence domain="all" title="NASA OSD laboratory context for the Inspiration4 cohort" /></div></details>
       <Card title="Private by design"><Bullets items={['Journal entries are never shown here or included in reports.', 'Only the selected astronaut’s own vitals and history are shown on their pages.', 'Emergency reports contain only the affected person’s data.']} /></Card><Disclaimer /></div>
   );
 }

@@ -42,14 +42,14 @@ export default function Assess() {
           {redSel && <div role="alert" className="flex gap-2 rounded-lg border border-crit bg-crit/10 p-3 text-crit"><TriangleAlert size={18} aria-hidden /><span>Urgent symptom selected. <Link href="/emergency" className="font-semibold underline">Go to Emergency Center now</Link> — do not wait on this form.</span></div>}
           <Btn variant="primary" className="w-full" onClick={apply}>Update assessment</Btn>{msg && <p role="status" className="text-teal">{msg}</p>}</div></Card>
       </div>
-      <Card title="Health Explainer (local knowledge base — not an AI model)" right={<Bot size={16} className="text-cyan" aria-hidden />}>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Need an explanation? Open Health Explainer</summary><div className="mt-3"><Card title="Health Explainer" right={<Bot size={16} className="text-cyan" aria-hidden />}>
         <p className="mb-3 text-xs text-mute">Answers come from a small curated knowledge base and your own assessment data — no external AI and no API key. It is explanatory, not an approved medical protocol, and never decides whether an emergency is safe.</p>
         <div className="mb-3 flex flex-wrap gap-2">{['Why is my heart rate changing?', 'Why do I need this measurement?', 'What does this warning mean?', 'How do I perform this assessment?', 'What health trends have changed recently?'].map((x) => <button key={x} onClick={() => ask(x)} className="min-h-[40px] rounded-full border border-line bg-bg2 px-3 text-xs hover:border-cyan">{x}</button>)}</div>
         <div className="space-y-3" aria-live="polite">{chat.map((c, i) => <div key={i} className="text-sm"><div className="text-mute">You: {c.q}</div><div className={`mt-1 rounded-lg border p-3 ${c.r.urgent ? 'border-crit bg-crit/10' : 'border-line bg-bg2'}`}><b>{c.r.title}</b><p className="mt-1">{c.r.text}</p>{c.r.urgent && <Link href="/emergency" className="mt-2 inline-block font-semibold text-crit underline">Open Emergency Center</Link>}</div></div>)}</div>
         <div className="mt-3 flex gap-2"><input className={inputCls} placeholder="Ask about a measurement, warning or trend…" value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && ask(q)} aria-label="Ask a question" /><Btn variant="primary" onClick={() => ask(q)} aria-label="Send"><Send size={16} /></Btn></div>
-      </Card>
-      <LabPanel mode="summary" title="Integrated laboratory assessment" />
-      <OSDEvidence domain="all" title="NASA research evidence available to this assessment" />
+      </Card></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Advanced laboratory data</summary><div className="mt-3"><LabPanel mode="summary" title="Integrated laboratory assessment" /></div></details>
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">NASA research context (optional)</summary><div className="mt-3"><OSDEvidence domain="all" title="NASA research evidence available to this assessment" /></div></details>
       <Disclaimer />
     </div>
   );

@@ -68,3 +68,25 @@ The interface uses a single dark, low-glare palette suited to dim cabin lighting
 - **Hybrid workflow:** enter vital signs in Health Check as before, then add CBC/CMP laboratory results in the new laboratory-result panel on the same page. Each profile stores its own results. The latest result for each analyte is assessed; results older than 90 days are marked stale and excluded from the current combined status. A matching low/high result raises overall status to AMBER; NASA reference intervals alone never create RED/critical status.
 - The 27 enabled intervals comprise 17 consistent OSD-569 CBC ranges and 10 consistent OSD-575 CMP ranges. Sex-varying/ambiguous intervals and the hemoglobin field with a source unit-label ambiguity are intentionally excluded. OSD-571 cohort statistics and OSD-575/656 protein-abundance assays without clinical intervals remain research context only.
 - **Architecture limitation:** this is still a static JSON data source served from `public/` plus per-browser IndexedDB, not a server-side database/API backend. Manual entries recalculate immediately after save; no live sensor stream is connected.
+
+
+## UI usability update
+- Reduced the astronaut/Earth background image visibility with a stronger overlay so page content is easier to read.
+- Increased card and top-bar opacity and softened visual decoration.
+- Simplified the sidebar into three clear groups: Mission, Health, and Support & Tools. All existing pages and features remain accessible.
+- Tightened page-header, card-heading, and navigation spacing to reduce visual clutter without hiding health data or safety information.
+
+## Run locally
+```bash
+npm ci
+npm run dev
+```
+
+## UI simplification update (November 2026)
+
+- Long measurement instructions, health explainers, body-system education, hazard details, and privacy/deployment notes are now tucked into clearly labelled expandable sections so the primary action and current status are easier to find.
+- Repeated NASA OSD research and laboratory panels are now optional expandable sections across dashboard, crew, health check, assessment, history, body explorer, hazards, and reports. The underlying data and tools remain available.
+- Relax & Recharge now includes two additional offline mini-games: Reaction Test and Pattern Recall.
+- Existing health monitoring, records, reporting, emergency guidance, NASA OSD data and other app functionality are retained.
+
+This remains a research/demo prototype. Simulated values are not live spacecraft telemetry and the interface is not a substitute for mission medical procedures.

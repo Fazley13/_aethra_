@@ -296,3 +296,31 @@ label[class*="text-"],
 .a-card [class*="label"] {
   color: #f0f6ff !important;
 }
+
+
+/* AETHRA usability pass: quieter background, clearer content surfaces. */
+body {
+  background-image:
+    linear-gradient(110deg, rgb(2 8 18 / .72), rgb(3 12 26 / .66) 52%, rgb(2 8 18 / .74)),
+    url('/space-backgrounds/astronaut-earth.webp') !important;
+  background-size: cover, cover !important;
+  background-position: center, center 38% !important;
+}
+.aethra-topbar {
+  background: rgb(5 16 32 / .88) !important;
+  border-color: rgb(185 211 245 / .32) !important;
+}
+.a-card, .a-stat {
+  background: rgb(5 18 36 / .88) !important;
+  border-color: rgb(180 207 243 / .32) !important;
+  backdrop-filter: blur(16px) saturate(115%) !important;
+}
+.a-card:hover { background: rgb(8 25 48 / .92) !important; }
+.aethra-main { max-width: 1320px; }
+.a-page-head { margin-bottom: 1.25rem !important; padding-bottom: 1rem !important; }
+.panel-title { font-size: .78rem; letter-spacing: .045em; }
+.a-card > .panel-title, .a-card .mb-4.flex { margin-bottom: .8rem !important; }
+.aethra-nav a { min-height: 40px !important; margin: 1px 0 !important; }
+.aethra-nav > div { margin-top: .85rem !important; }
+.aethra-brand { padding-top: 16px !important; padding-bottom: 12px !important; }
+.aethra-footer { opacity: .72; }

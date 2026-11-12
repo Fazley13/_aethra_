@@ -25,12 +25,12 @@ export default function Check() {
       <PageHead crumb="Health monitoring" title="Health Check" sub={`Enter a new measurement for ${profile.name}. Values are manually entered.`} />
       <div role="tablist" aria-label="Measurements" className="flex flex-wrap gap-2">{GUIDES.map((x) => <button key={x.id} role="tab" aria-selected={x.id === id} onClick={() => reset(x.id)} className={`min-h-[44px] rounded-lg border px-3 text-sm ${x.id === id ? 'border-cyan bg-cyan text-onaccent' : 'border-line bg-card text-tx hover:border-cyan'}`}>{x.name}</button>)}</div>
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card title={`How to measure: ${g.name}`} className="lg:col-span-2"><div className="space-y-4 text-sm">
+        <details className="lg:col-span-2 rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Measurement instructions for {g.name}</summary><div className="mt-3"><Card title={`How to measure: ${g.name}`}><div className="space-y-4 text-sm">
           <div><b>1. What is being measured?</b><p className="text-mute">{g.what}</p></div><div><b>2. Why is it important?</b><p className="text-mute">{g.why}</p></div>
           <div><b>3. How to measure</b><ol className="mt-1 list-decimal space-y-1 pl-5 text-mute">{g.how.map((h, i) => <li key={i}>{h}</li>)}</ol></div>
           <div><b>4. Equipment</b><p className="text-mute">{g.equip}</p></div><div><b>5. What can influence the result?</b><Bullets items={g.affects} /></div>
           <div><b>6. If the result is unusual</b><Bullets items={g.unusual} /></div><div><b>7. When to notify the crew or medical officer</b><Bullets items={g.notify} /></div>
-          <Callout><b>Limitation:</b> {g.limits}</Callout></div></Card>
+          <Callout><b>Limitation:</b> {g.limits}</Callout></div></Card></div></details>
         <Card title="Enter measurement"><div className="space-y-3">
           {fields.map((f) => <Field key={f.k} label={f.label} error={err[f.k]} hint={`Accepted range ${LIMITS[f.k].min}–${LIMITS[f.k].max} ${f.k === 'temp' ? '°C' : f.k === 'glucose' ? 'mg/dL' : LIMITS[f.k].unit} (sanity check only, not a medical limit)`}><input inputMode="decimal" className={inputCls} type="number" step={f.step ?? '1'} value={vals[f.k] ?? ''} onChange={(e) => setVals({ ...vals, [f.k]: e.target.value })} aria-invalid={!!err[f.k]} /></Field>)}
           {id === 'temp' && <Field label="Unit"><select className={inputCls} value={tUnit} onChange={(e) => setTUnit(e.target.value as any)}><option value="C">°C (Celsius)</option><option value="F">°F (Fahrenheit, converted to °C)</option></select></Field>}
@@ -42,7 +42,7 @@ export default function Check() {
           <div className="border-t border-line pt-3 text-sm"><div className="mb-1 text-xs text-mute">Previous value {lastV ? <>· <Freshness ts={lastV.ts} /></> : ''}: <b className="text-tx">{lastV ? lastV.v : 'none'}</b></div><div className="text-xs text-mute">Current overall status</div><div className="mt-1"><StatusBadge s={assessment.status} short /></div><div className="mt-2"><Link className="text-cyan underline" href="/assess">See full assessment</Link></div></div>
           <p className="text-xs text-mute">Feeling severely unwell? Skip measuring and use the Emergency button.</p></div></Card>
       </div>
-      <LabPanel mode="input" title="Add laboratory results · NASA OSD reference comparison" />
+      <details className="rounded-xl border border-line bg-card/60 p-3"><summary className="cursor-pointer text-sm font-semibold">Advanced laboratory data</summary><div className="mt-3"><LabPanel mode="input" title="Add laboratory results · NASA OSD reference comparison" /></div></details>
       <Disclaimer />
     </div>
   );
