@@ -14,8 +14,8 @@ export default function Wellness() {
   const entries = s.journal.filter((j) => j.astroId === profile.id); const iso = isolationIndicator(profile, readings);
   const tone = iso.level === 'High' ? 'crit' : iso.level === 'Moderate' ? 'warn' : iso.level === 'Low' ? 'ok' : 'info';
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Mission hazards" title="Mental Wellness" sub="A private, supportive check-in. It is not a diagnosis; it helps you and your crew notice change early." />
+    <div className="space-y-6">
+      <PageHead crumb="Mission hazards" title="Mental Wellness" sub="Daily wellbeing check-in, breathing and private journal." />
       <Card title="Isolation indicator — how many wellbeing signals are concerning right now">
         <Callout tone={tone as any} title={iso.level === 'Not enough data' ? 'Not enough data yet' : `${iso.level}: ${iso.count} of ${iso.of} checked areas flagged`}>{iso.flags.length ? <Bullets items={iso.flags} /> : <span>{iso.level === 'Not enough data' ? 'Complete a few daily check-ins (mood, stress, fatigue, social connection, sleep).' : 'Nothing is currently flagged.'}</span>}<p className="mt-2 text-xs text-mute">{iso.note}</p></Callout></Card>
       <div className="grid gap-4 lg:grid-cols-2">

@@ -19,8 +19,8 @@ export default function Assess() {
   const apply = () => { set((x) => { const sy = { ...x.symptoms }; if (sel.length) sy[x.activeId] = { ts: Date.now(), ids: sel }; else delete sy[x.activeId]; return { ...x, symptoms: sy }; }); setMsg(sel.length ? 'Symptoms recorded and assessment updated.' : 'Symptoms cleared.'); };
   const ask = (text: string) => { if (!text.trim()) return; setChat((c) => [...c, { q: text, r: answer(text, assessment) }]); setQ(''); };
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Health monitoring" title="Health Assessment" sub={`Why ${profile.name} has the status shown, which measurement caused it, and what to do next. Rules-based decision support — it does not diagnose.`} />
+    <div className="space-y-6">
+      <PageHead crumb="Health monitoring" title="Health Assessment" sub={`Status, key signals and recommended next steps for ${profile.name}.`} />
       <div className="grid gap-4 lg:grid-cols-3">
         <Card title="Assessment result" className="lg:col-span-2"><div className="flex flex-wrap items-center gap-3"><StatusBadge s={assessment.status} big /><span className="text-xs text-mute">Data completeness {assessment.completeness}% · rules {assessment.version}</span></div>
           <p className="mt-3 text-sm"><b>Why this status:</b> {assessment.statusReason}</p>

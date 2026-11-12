@@ -3,23 +3,21 @@ import Link from 'next/link'; import { useMemo, useState } from 'react';
 import { Flame, Rocket, CheckSquare, Square, FlaskConical, Radio } from 'lucide-react';
 import { Btn, Card, PageHead, SimTag, StatusBadge, Disclaimer, Bullets, Field, inputCls, Freshness, SourceTag, Timeline, Callout } from '@/components/ui';
 import ProfileForm from '@/components/ProfileForm'; import { useApp, todayKey } from '@/lib/store'; import { latest } from '@/lib/assess'; import { assessHybrid } from '@/lib/hybrid';
-import { SCENARIOS } from '@/lib/demo'; import { activeTasks, doneToday, streak, weekCompletion } from '@/lib/routine'; import { commsStatus, readAdapters } from '@/lib/adapters'; import OSDEvidence from '@/components/OSDEvidence'; import LabPanel from '@/components/LabPanel';
+import { SCENARIOS } from '@/lib/demo'; import { activeTasks, doneToday, streak, weekCompletion } from '@/lib/routine'; import { commsStatus, readAdapters } from '@/lib/adapters';
 
 export default function Overview() {
   const { s, set, loadDemo, addProfile, profile, readings, assessment, scenario, setScenario, osdLabReferences } = useApp(); const [creating, setCreating] = useState(false); const [perr, setPerr] = useState<string | null>(null); const [now] = useState(() => Date.now());
   const crew = useMemo(() => s.profiles.map((p) => ({ p, a: assessHybrid(p, s.readings[p.id] ?? [], s.symptoms[p.id], s.labResults?.[p.id] ?? [], osdLabReferences).assessment })), [s.profiles, s.readings, s.symptoms, s.labResults, osdLabReferences]);
   if (!s.loaded || !profile || !assessment) return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <div className="hero-orbit relative overflow-hidden rounded-3xl border border-line p-6 shadow-panel md:p-12"><svg className="pointer-events-none absolute -right-24 -top-24 h-[420px] w-[420px] opacity-60 md:-right-10 md:-top-16 md:h-[520px] md:w-[520px]" viewBox="0 0 400 400" fill="none" aria-hidden="true"><circle cx="200" cy="200" r="190" stroke="#56D4F0" strokeOpacity=".15" /><circle cx="200" cy="200" r="140" stroke="#56D4F0" strokeOpacity=".22" strokeDasharray="2 6" /><circle cx="200" cy="200" r="90" stroke="#8B7BFF" strokeOpacity=".3" /><circle cx="200" cy="200" r="34" fill="#56D4F0" fillOpacity=".12" stroke="#56D4F0" strokeOpacity=".5" /><circle cx="335" cy="95" r="6" fill="#56D4F0" /><circle cx="92" cy="298" r="4" fill="#8B7BFF" /></svg><div className="on-dark relative">
         <div className="eyebrow mb-3 !tracking-[0.22em] !text-cyan">Astronaut Health Monitoring &amp; Decision Support System</div>
         <h1 className="bg-gradient-to-br from-white via-cyan to-[#8B7BFF] bg-clip-text text-5xl font-semibold tracking-[0.2em] text-transparent md:text-7xl">AETHRA</h1><p className="mt-2 text-lg text-tx/80">Beyond Earth, Beyond Limits.</p>
-        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mute">Track an astronaut’s health against their own baseline, understand why something is flagged, and prepare an emergency report — even offline. This is a research prototype: it supports decisions and never diagnoses.</p>
+        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-mute">Monitor astronaut health, review alerts and prepare reports — even offline.</p>
         <div className="mt-6 flex flex-wrap gap-3"><Btn variant="primary" className="px-6 py-3 text-base" onClick={loadDemo}><Rocket size={18} aria-hidden />LOAD DEMO MISSION</Btn><Btn className="!bg-transparent" onClick={() => setCreating(true)}>Create my own profile</Btn></div>
-        <p className="mt-3 text-xs text-mute">The demo is a <b>simulated</b> Mars transit with three sample astronauts. No account needed; data stays in this browser.</p></div></div>
+        <p className="mt-3 text-xs text-mute">Demo data is simulated. No account needed; data stays in this browser.</p></div></div>
       <div className="grid gap-4 md:grid-cols-3">{[['1. Pick an astronaut', 'Each profile holds a personal baseline: that person’s usual values.'], ['2. Record measurements', 'Enter vitals and how you feel. Every value is labelled MANUAL or SIMULATED.'], ['3. Read the assessment', 'GREEN, AMBER, RED — or UNKNOWN when data is missing or old — with the reasons.']].map(([h, t]) => <Card key={h}><h2 className="font-semibold">{h}</h2><p className="mt-1 text-sm text-mute">{t}</p></Card>)}</div>
       {creating && <Card title="Create astronaut profile"><ProfileForm label="Create profile" existingIds={s.profiles.map((p) => p.id)} externalError={perr} onSave={(p) => setPerr(addProfile(p))} /></Card>}
-      <LabPanel mode="summary" title="Current profile laboratory assessment" />
-      <OSDEvidence domain="all" title="NASA OSD laboratory records connected to AETHRA" />
       <Disclaimer />
     </div>);
   const m = profile.mission; const pctDone = Math.min(100, Math.round((m.day / m.durationDays) * 100)); const last = readings[readings.length - 1];
@@ -33,7 +31,7 @@ export default function Overview() {
     ...readings.filter((r) => r.source === 'manual').slice(-3).map((r) => ({ at: r.ts, text: 'Manual measurement recorded', tone: undefined })),
   ].sort((a, b) => b.at - a.at).slice(0, 6);
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       <PageHead crumb="Mission" title="Mission Overview" sub={`${m.name} · Day ${m.day} of ${m.durationDays} · ${m.destination} · ${m.env}`} right={profile.simulated ? <SimTag>SIMULATED MISSION</SimTag> : undefined} />
       {s.profiles.length > 0 && profile.simulated && <Callout tone="warn" title="Simulation mode">Everything on this page is demonstration data generated by AETHRA. No real sensors, NASA feeds or ground teams are connected.</Callout>}
       <div className="grid gap-4 lg:grid-cols-3">
@@ -56,8 +54,6 @@ export default function Overview() {
         </Card>
         <Card title="Recent health events">{events.length ? <Timeline items={events} /> : <p className="text-sm text-mute">No events yet. Measurements, symptom reports and emergency reports appear here.</p>}</Card>
       </div>
-      <LabPanel mode="summary" title="Current profile laboratory assessment" />
-      <OSDEvidence domain="all" title="NASA OSD research data supporting AETHRA" />
       <Card title="Hazard snapshot" right={<Link href="/hazards" className="text-sm text-cyan underline">Open Space Hazards</Link>}>
         <div className="grid gap-4 text-sm md:grid-cols-3">
           <div><div className="flex items-center gap-2 font-semibold">Radiation <SourceTag s={rad?.provenance ?? 'missing'} /></div>{rad?.points.length ? <p className="mt-1">{rad.points[rad.points.length - 1].v} mSv/day now · ≈{cum?.points[cum.points.length - 1].v} mSv mission total (estimate)</p> : <p className="mt-1 text-mute">No dosimeter data for this environment.</p>}</div>

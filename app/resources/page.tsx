@@ -3,7 +3,7 @@ import { Card, PageHead, Bullets, Disclaimer, Callout } from '@/components/ui'; 
 export default function Resources() {
   const byId = Object.fromEntries(EVIDENCE.map((e) => [e.id, e]));
   return (
-    <div className="space-y-5"><PageHead crumb="System" title="Scientific Resources" sub="The sources behind AETHRA’s content, how each maps to a feature, and what is — and is not — established." />
+    <div className="space-y-6"><PageHead crumb="System" title="Scientific Resources" sub="Sources and research references used by AETHRA." />
       <Callout tone="warn" title="Honest about the evidence">AETHRA’s alert thresholds, trend rules and emergency wording are prototype design choices with no clinical validation. They are not NASA-approved values. The references below support background content only.</Callout>
       <div className="grid gap-4 md:grid-cols-2">
         <Card title="Evidence levels used"><dl className="space-y-3 text-sm"><div><dt className="font-semibold text-teal">Established knowledge</dt><dd className="text-mute">General spaceflight physiology and the five hazards as described by NASA HRP and peer-reviewed reviews.</dd></div><div><dt className="font-semibold text-cyan">Published research</dt><dd className="text-mute">Peer-reviewed papers in the table below (DOIs verified).</dd></div><div><dt className="font-semibold text-warn">Prototype assumptions</dt><dd className="text-mute">Everything in <code>lib/rules.ts</code>, isolation indicator, multi-signal patterns, emergency steps.</dd></div><div><dt className="font-semibold text-warn">Simulated data</dt><dd className="text-mute">All demo astronauts, readings, crew data, radiation, cabin environment and communication delay.</dd></div></dl></Card>

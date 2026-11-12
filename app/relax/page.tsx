@@ -13,8 +13,8 @@ const GAMES: { id: string; label: string; sub: string; I: LucideIcon }[] = [
 export default function Relax() {
   const [id, setId] = useState('memory'); const g = GAMES.find((x) => x.id === id)!;
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Relax & recharge" title="Earth Games" sub="Slow, pressure-free games built around home: oceans, forests, weather and gardens. No scores to chase and nothing to lose." />
+    <div className="space-y-6">
+      <PageHead crumb="Relax & recharge" title="Earth Games" sub="Take a short break with calming mini-games." />
       <Callout tone="info" title="For relaxation, not treatment">These activities are a way to unwind and feel connected to Earth. If low mood, stress or isolation keeps building, use the Mental Wellness page and talk to your crew or medical support.</Callout>
       <div role="tablist" aria-label="Games" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">{GAMES.map(({ id: gid, label, sub, I }) => (
         <button key={gid} role="tab" aria-selected={gid === id} aria-controls="game-panel" onClick={() => setId(gid)} className={`flex min-h-[64px] items-center gap-3 rounded-2xl border px-4 text-left transition-colors ${gid === id ? 'border-cyan bg-cyan/10 shadow-glow' : 'border-line bg-card/80 hover:border-cyan/60'}`}>

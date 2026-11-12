@@ -7,7 +7,7 @@ export default function Settings() {
   const bytes = JSON.stringify(s).length;
   function pick(f?: File) { if (!f) return; if (f.size > 20e6) { setErr('That file is too large (limit 20 MB).'); return; } f.text().then((t) => { try { JSON.parse(t); setPending(t); setErr(''); setDlg('restore'); } catch { setErr('That file is not valid JSON.'); } }); if (file.current) file.current.value = ''; }
   return (
-    <div className="space-y-5"><PageHead crumb="System" title="Settings" sub="Profiles, display, backups and privacy." />
+    <div className="space-y-6"><PageHead crumb="System" title="Settings" sub="Profiles, display, backups and privacy." />
       <div role="status" aria-live="polite">{msg && <Callout tone="ok">{msg}</Callout>}{err && <Callout tone="crit">{err}</Callout>}</div>
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="Astronaut & simulation"><div className="space-y-3">{s.profiles.length > 0 && <Field label="Selected astronaut"><select className={inputCls} value={s.activeId} onChange={(e) => set((x) => ({ ...x, activeId: e.target.value }))}>{s.profiles.map((p) => <option key={p.id} value={p.id}>{p.name} ({p.id}){p.simulated ? ' — simulated' : ''}</option>)}</select></Field>}

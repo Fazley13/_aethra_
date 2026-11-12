@@ -21,8 +21,8 @@ export default function Check() {
   const flaggedNow = saved && assessment.observations.some((o) => o.level > 0 && saved.keys.includes(o.key as NumKey));
   const lastV = fields.map((f) => latest(readings, f.k)).find(Boolean);
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Health monitoring" title="Health Check" sub={`Record a measurement for ${profile.name}. Pick an indicator, follow the steps, then enter the value. Entries are typed in by hand — they are not live sensor readings.`} />
+    <div className="space-y-6">
+      <PageHead crumb="Health monitoring" title="Health Check" sub={`Enter a new measurement for ${profile.name}. Values are manually entered.`} />
       <div role="tablist" aria-label="Measurements" className="flex flex-wrap gap-2">{GUIDES.map((x) => <button key={x.id} role="tab" aria-selected={x.id === id} onClick={() => reset(x.id)} className={`min-h-[44px] rounded-lg border px-3 text-sm ${x.id === id ? 'border-cyan bg-cyan text-onaccent' : 'border-line bg-card text-tx hover:border-cyan'}`}>{x.name}</button>)}</div>
       <div className="grid gap-4 lg:grid-cols-3">
         <Card title={`How to measure: ${g.name}`} className="lg:col-span-2"><div className="space-y-4 text-sm">

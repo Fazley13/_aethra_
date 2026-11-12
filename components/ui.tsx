@@ -21,35 +21,35 @@ export const SimTag = ({ children = 'SIMULATED' }: { children?: React.ReactNode 
 export const ageText = (ts: number, now = Date.now()) => { const m = Math.round((now - ts) / 6e4); if (m < 1) return 'just now'; if (m < 60) return `${m} min ago`; const h = Math.round(m / 60); if (h < 48) return `${h} h ago`; return `${Math.round(h / 24)} days ago`; };
 export const Freshness = ({ ts, staleH = 36 }: { ts?: number; staleH?: number }) => { if (!ts) return <span className="text-xs text-mute">no data</span>; const stale = Date.now() - ts > staleH * 36e5; return <time dateTime={new Date(ts).toISOString()} title={new Date(ts).toLocaleString()} className={`text-xs ${stale ? 'font-semibold text-warn' : 'text-mute'}`}>{stale ? 'Out of date · ' : ''}{ageText(ts)}</time>; };
 export const Card = ({ children, className = '', title, right, id }: { children: React.ReactNode; className?: string; title?: string; right?: React.ReactNode; id?: string }) => (
-  <section id={id} className={`rounded-2xl border border-line bg-card/85 p-4 shadow-panel backdrop-blur-sm md:p-5 ${className}`}>
+  <section id={id} className={`a-card rounded-2xl border border-line bg-card/85 p-4 shadow-panel backdrop-blur-sm md:p-5 ${className}`}>
     {title && <div className="mb-4 flex items-center justify-between gap-2"><h2 className="panel-title">{title}</h2>{right}</div>}{children}
   </section>
 );
 export const PageHead = ({ title, sub, right, crumb }: { title: string; sub?: string; right?: React.ReactNode; crumb?: string }) => {
   useEffect(() => { document.title = `${title} · AETHRA`; }, [title]);
   return (
-  <header className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-line pb-5">
+  <header className="a-page-head mb-7 flex flex-wrap items-end justify-between gap-3 border-b border-line pb-6">
     <div>{crumb && <div className="eyebrow mb-2 flex items-center gap-2"><span className="h-px w-6 bg-cyan" aria-hidden />{crumb}</div>}<h1 className="text-2xl font-semibold tracking-tight md:text-[2rem] md:leading-tight">{title}</h1>{sub && <p className="mt-1.5 max-w-3xl text-sm text-mute">{sub}</p>}</div>{right}
   </header>
   );
 };
 export function Btn({ variant = 'default', className = '', ...p }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'default' | 'primary' | 'danger' | 'ghost' }) {
-  const v = { default: 'border-line bg-bg2 text-tx hover:border-cyan/70 hover:bg-navy2', primary: 'border-cyan bg-cyan text-onaccent hover:shadow-glow hover:brightness-110 font-semibold', danger: 'border-crit bg-crit text-onaccent hover:shadow-alert hover:brightness-110 font-semibold', ghost: 'border-transparent hover:bg-bg2' }[variant];
-  return <button type="button" {...p} className={`inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 ${v} ${className}`} />;
+  const v = { default: 'border-line bg-bg2 text-tx hover:border-cyan/70 hover:bg-navy2', primary: 'a-btn-primary border-cyan bg-cyan text-onaccent hover:shadow-glow hover:brightness-110 font-semibold', danger: 'border-crit bg-crit text-onaccent hover:shadow-alert hover:brightness-110 font-semibold', ghost: 'border-transparent hover:bg-bg2' }[variant];
+  return <button type="button" {...p} className={`a-btn inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border px-4 py-2 text-sm transition-all disabled:cursor-not-allowed disabled:opacity-50 ${v} ${className}`} />;
 }
 export function Stat({ label, value, unit, sub, tone = 'ok' }: { label: string; value: React.ReactNode; unit?: string; sub?: React.ReactNode; tone?: 'ok' | 'warn' | 'crit' | 'none' }) {
   const t = { ok: 'text-tx', warn: 'text-warn', crit: 'text-crit', none: 'text-mute' }[tone];
-  return <div className="rounded-xl border border-line bg-bg2/70 p-3.5"><div className="eyebrow !text-[10.5px]">{label}</div><div className={`mt-1.5 font-mono text-2xl font-semibold tabular-nums ${t}`}>{value}<span className="ml-1 text-sm font-normal text-mute">{unit}</span></div>{sub && <div className="mt-1 text-xs text-mute">{sub}</div>}</div>;
+  return <div className="a-stat rounded-xl border border-line bg-bg2/70 p-3.5"><div className="eyebrow !text-[10.5px]">{label}</div><div className={`mt-1.5 font-mono text-2xl font-semibold tabular-nums ${t}`}>{value}<span className="ml-1 text-sm font-normal text-mute">{unit}</span></div>{sub && <div className="mt-1 text-xs text-mute">{sub}</div>}</div>;
 }
 export const Field = ({ label, hint, error, children }: { label: string; hint?: string; error?: string; children: React.ReactNode }) => (
   <label className="block text-sm"><span className="mb-1.5 block text-[13px] font-medium text-tx/90">{label}</span>{children}{hint && !error && <span className="mt-1 block text-xs text-mute">{hint}</span>}{error && <span role="alert" className="mt-1 block text-xs font-medium text-crit">{error}</span>}</label>
 );
-export const inputCls = 'min-h-[44px] w-full rounded-xl border border-line bg-bg2 px-3 py-2 text-tx placeholder:text-mute/70 transition-colors hover:border-mute/50 focus:border-cyan disabled:cursor-not-allowed disabled:opacity-60';
+export const inputCls = 'a-input min-h-[44px] w-full rounded-xl border border-line bg-bg2 px-3 py-2 text-tx placeholder:text-mute/70 transition-colors hover:border-mute/50 focus:border-cyan disabled:cursor-not-allowed disabled:opacity-60';
 export const Disclaimer = () => <p className="mt-8 rounded-xl border border-dashed border-line bg-bg2/50 p-3.5 text-xs text-mute"><b className="font-mono tracking-wide text-tx/80">RESEARCH PROTOTYPE.</b> AETHRA is not a certified medical device, is not endorsed by NASA or any space agency, does not diagnose, and does not replace a flight surgeon or medical professional. General adult screening references, prototype heuristics and source-supplied NASA OSD laboratory intervals are not mission-approved flight-medicine thresholds. Demo data is simulated.</p>;
 export const Bullets = ({ items }: { items: string[] }) => <ul className="space-y-1.5 text-sm">{items.map((i, k) => <li key={k} className="flex gap-2"><Circle size={6} className="mt-2 shrink-0 fill-cyan text-cyan opacity-80" aria-hidden /><span>{i}</span></li>)}</ul>;
 export const Callout = ({ tone = 'info', children, title }: { tone?: 'info' | 'warn' | 'crit' | 'ok'; children: React.ReactNode; title?: string }) => {
   const c = { info: 'border-cyan/35 bg-cyan/5', warn: 'border-warn/50 bg-warn/10', crit: 'border-crit/50 bg-crit/10', ok: 'border-teal/40 bg-teal/10' }[tone];
-  return <div role={tone === 'crit' ? 'alert' : undefined} className={`flex gap-3 rounded-xl border p-3.5 text-sm ${c}`}><Info size={18} className="mt-0.5 shrink-0 text-mute" aria-hidden /><div>{title && <div className="font-semibold">{title}</div>}{children}</div></div>;
+  return <div role={tone === 'crit' ? 'alert' : undefined} className={`a-callout flex gap-3 rounded-xl border p-3.5 text-sm ${c}`}><Info size={18} className="mt-0.5 shrink-0 text-mute" aria-hidden /><div>{title && <div className="font-semibold">{title}</div>}{children}</div></div>;
 };
 export function EmptyState({ title, children, action }: { title: string; children?: React.ReactNode; action?: React.ReactNode }) {
   return <div className="rounded-2xl border border-dashed border-line bg-card/60 p-8 text-center"><h2 className="text-lg font-semibold">{title}</h2><p className="mx-auto mt-1 max-w-md text-sm text-mute">{children}</p>{action && <div className="mt-4">{action}</div>}</div>;

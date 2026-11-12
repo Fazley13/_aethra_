@@ -13,8 +13,8 @@ export default function Dashboard() {
   const flagged = (k: NumKey) => assessment.observations.some((o) => (o.key === k || (k === 'sys' && o.key === 'sys')) && o.level > 0);
   const D = 864e5; const cur = (k: NumKey) => windowMean(readings, k, now - 7 * D, now + 1), prev = (k: NumKey) => windowMean(readings, k, now - 14 * D, now - 7 * D);
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Mission" title="Health Dashboard" sub={`Current values and trends for ${profile.name}, compared with their own personal baseline.`} right={profile.simulated ? <SimTag /> : undefined} />
+    <div className="space-y-6">
+      <PageHead crumb="Mission" title="Health Dashboard" sub={`Vitals and trends compared with ${profile.name}’s baseline.`} right={profile.simulated ? <SimTag /> : undefined} />
       <Card title="Current measurements" right={<span className="text-xs text-mute">Overall: {assessment.status}</span>}>
         <div className="overflow-x-auto"><table className="w-full min-w-[760px] text-sm"><caption className="sr-only">Latest measurement for each indicator with baseline, deviation and source</caption>
           <thead className="text-left text-xs text-mute"><tr><th scope="col" className="py-2">Indicator</th><th scope="col">Current</th><th scope="col">Personal baseline</th><th scope="col">Change</th><th scope="col">Check</th><th scope="col">Source</th><th scope="col">Updated</th></tr></thead><tbody>

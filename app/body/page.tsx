@@ -9,8 +9,8 @@ export default function Body() {
     <g role="button" tabIndex={0} aria-label={label} aria-pressed={id === pid} onClick={() => setId(pid)} onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setId(pid))} className="cursor-pointer" style={{ ['--c' as any]: id === pid ? '#56D4F0' : '#5B6B8C' }}><title>{label}</title>{children}</g>);
   const sh = { fill: 'rgba(86,212,240,0.08)', stroke: 'var(--c)', strokeWidth: 2.5 } as const;
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Health monitoring" title="Body Explorer" sub={`Choose a body system to see what it does, how spaceflight can affect it, and ${profile.name}’s related measurements.`} />
+    <div className="space-y-6">
+      <PageHead crumb="Health monitoring" title="Body Explorer" sub={`Explore body systems and related measurements for ${profile.name}.`} />
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-2"><svg viewBox="0 0 300 560" className="mx-auto h-[520px] max-w-full" role="group" aria-label="Human body diagram. Each region is a button.">
           <g stroke="#2B3A5C" strokeWidth="2" fill="#111A30"><path d="M120 120 Q150 130 180 120 L215 135 Q235 145 238 175 L250 290 L232 294 L214 205 L208 300 L204 350 L196 520 L172 520 L160 360 L150 345 L140 360 L128 520 L104 520 L96 350 L92 300 L86 205 L68 294 L50 290 L62 175 Q65 145 85 135 Z" /></g>

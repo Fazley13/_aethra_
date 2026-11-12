@@ -9,7 +9,7 @@ export default function Crew() {
   const n = (st: string) => rows.filter((r) => r.a.status === st).length;
   const moods = rows.map((r) => latest(s.readings[r.p.id] ?? [], 'mood')?.v).filter((x): x is number => typeof x === 'number'); const avgM = moods.length >= 3 ? Math.round((moods.reduce((a, b) => a + b, 0) / moods.length) * 10) / 10 : null;
   return (
-    <div className="space-y-5"><PageHead crumb="Mission" title="Crew Overview" sub="Health status and operational availability are shown separately. Crewmates’ details are hidden by default." right={profile.simulated ? <SimTag>SAMPLE CREW</SimTag> : undefined} />
+    <div className="space-y-6"><PageHead crumb="Mission" title="Crew Overview" sub="Crew health at a glance. Individual details stay private by default." right={profile.simulated ? <SimTag>SAMPLE CREW</SimTag> : undefined} />
       <Callout tone="warn" title="Privacy model: demonstration only">The visibility rules below hide data in the interface, but anyone using this browser can still read local storage. A real deployment needs server-side authentication, role-based access and encryption (see lib/access.ts).</Callout>
       <div className="grid gap-4 md:grid-cols-3">
         <Card title="Crew health status"><div className="text-sm"><b className="font-mono text-2xl">{n('GREEN')}</b> GREEN · <b className="font-mono text-2xl">{n('AMBER')}</b> AMBER · <b className="font-mono text-2xl">{n('RED')}</b> RED · <b className="font-mono text-2xl">{n('UNKNOWN')}</b> UNKNOWN</div><p className="mt-1 text-xs text-mute">UNKNOWN means not enough recent data. It is never counted as healthy.</p></Card>

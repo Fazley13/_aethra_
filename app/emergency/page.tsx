@@ -30,8 +30,8 @@ export default function Emergency() {
     if (subject) set((x) => ({ ...x, symptoms: { ...x.symptoms, [subject.id]: { ts: Date.now(), ids: Array.from(new Set([...(x.symptoms[subject.id]?.ids ?? []), em!.id])) } } })); setRep(saved);
   }
   return (
-    <div className="space-y-5">
-      <PageHead crumb="Response & reporting" title="Emergency Center" sub="Act first. Choose what is happening. Do not let forms or questions delay care or alerting crew." />
+    <div className="space-y-6">
+      <PageHead crumb="Response & reporting" title="Emergency Center" sub="Act first. Alert crew and follow emergency procedures." />
       <Callout tone="crit" title="Local demo workflow — nothing is sent"><span>AETHRA does not alert crew, call ground, or contact a flight surgeon. It guides you and prepares a report you can pass on. Always follow the mission’s approved emergency procedures.</span></Callout>
       <Card title="1 · Who needs help?"><div className="grid gap-3 md:grid-cols-2"><Field label="Affected person"><select className={inputCls} value={subjectId} onChange={(e) => { setWho(e.target.value); setRep(null); }}>{s.profiles.map((p) => <option key={p.id} value={p.id}>{p.name} ({p.id}){p.id === profile.id ? ' — me' : ''}</option>)}<option value="UNLISTED">Someone not in the AETHRA roster</option></select></Field>
         {unlisted && <Field label="Name or description"><input className={inputCls} value={other} onChange={(e) => setOther(e.target.value)} /></Field>}</div>
